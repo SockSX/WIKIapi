@@ -1,0 +1,44 @@
+import wikipediaapi
+import re
+
+site = wikipediaapi.Wikipedia('ru')
+
+# Данная функция работает при условии упорядоченного по алфавиту наименованию животных на сайте.
+#def choosen_category(categorymembers, i=0, n=0):
+    #string = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
+    #print(len(string))
+    #for c in categorymembers.values():
+        #if re.match(r"\b"+string[i], c.title, re.IGNORECASE):
+            #print(c.title)
+         #   n += 1
+        #else:
+         #   print(string[i], n)
+          #  i += 1
+           # n = 0
+            #if i == len(string):
+             #   break
+
+
+def choosen_category(categorymembers, i=0, n=0):
+    example = "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
+
+    for c in categorymembers.values():
+        if example[i].upper() == c.title[0]:
+            n += 1
+
+        elif re.match(r"\bA[A-Za-z]\w*", c.title):
+            print(example[i].upper() + ":", n)
+            i += 1
+
+            if i == len(example):
+                break
+            else:
+                return choosen_category(categorymembers, i)
+
+        else:
+            continue
+
+
+animals = site.page("Категория:Животные_по_алфавиту")
+print("Животные_по_алфавиту")
+choosen_category(animals.categorymembers)
